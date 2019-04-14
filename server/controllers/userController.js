@@ -67,7 +67,7 @@ const getUsers = (req, res) => {
   // check out what's going on in services/index.js in the `validate` token function
   User.find({}, (err, users) => {
     if (err) return res.send(err);
-    res.send(users);
+    res.status(200).send(users);
   });
 };
 

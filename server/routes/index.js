@@ -7,7 +7,7 @@ const services = require('./services');
 const stripe = require('./stripe');
 
 module.exports = app => {
-  app.route('/getToken').get((req, res) => res.send(getToken()));
+  app.route('/getToken').get((req, res) => res.send(getToken())); // for testing
   app.use('/api/users', users);
   app.use('/api/stylists', stylists);
   app.use('/api/appointments', appointments);

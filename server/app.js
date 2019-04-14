@@ -21,15 +21,15 @@ mongoose
     console.log('MongoDB is connected');
     // FOR TESTING ONLY - DROPS ALL USERS FROM DATABASE
     // FOR TESTING ONLY - DROPS ALL STYLISTS FROM DATABASE
-    db === 'mongodb://localhost:27017/hairspray'
-      ? User.collection.deleteMany()
-      : null;
-    db === 'mongodb://localhost:27017/hairspray'
-      ? Stylist.collection.deleteMany()
-      : null;
-    db === 'mongodb://localhost:27017/hairspray'
-      ? console.log('TABLES DROPPED')
-      : null;
+    // db === 'mongodb://localhost:27017/hairspray'
+    //   ? User.collection.deleteMany()
+    //   : null;
+    // db === 'mongodb://localhost:27017/hairspray'
+    //   ? Stylist.collection.deleteMany()
+    //   : null;
+    // db === 'mongodb://localhost:27017/hairspray'
+    //   ? console.log('TABLES DROPPED')
+    //   : null;
   })
   .catch(err => console.log(err));
 
@@ -58,3 +58,5 @@ app.get('*', (req, res) => {
 });
 
 app.listen(port, () => console.log(`App running at http://localhost:${port}`));
+
+module.exports = app;

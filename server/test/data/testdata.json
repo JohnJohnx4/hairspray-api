@@ -80,7 +80,7 @@
 				"image": "http://localhost:5000/images/stylists/Tara.jpg"
 			}
 	],
-	"service": [
+	"services": [
 		{
 			"type": "Haircut",
 			"price": "$20"
