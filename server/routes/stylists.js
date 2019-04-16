@@ -1,5 +1,6 @@
 const stylists = require('../controllers/stylistController');
 const router = require('express').Router();
+const { validateToken } = require('../config/auth');
 
 router
   .route('/')
@@ -8,7 +9,7 @@ router
 router
   .route('/:id')
   .get(stylists.STYLIST_GET)
-  .put(stylists.PUT)
-  .delete(stylists.DELETE);
+  .put(validateToken, stylists.PUT)
+  .delete(validateToken, stylists.DELETE);
 
 module.exports = router;

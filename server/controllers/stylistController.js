@@ -42,15 +42,12 @@ const getStylist = (req, res) => {
 const updateStylist = (req, res) => {
   const { id } = req.params;
   const { name, email } = req.body;
-  Stylist.findByIdAndUpdate(id, req.body, { new: true }).exec(
+  Stylist.findByIdAndUpdate(id, { name, email }, { new: true }).exec(
     (err, stylist) => {
       if (err) {
         res.status(404).json({ error: 'Could not find that stylist' });
       }
-      res.status(200).json({
-        success: 'Stylist updated successfully',
-        stylist
-      });
+      res.status(200).json({ success: stylist });
     }
   );
 };
@@ -60,9 +57,9 @@ const deleteStylist = (req, res) => {
   Stylist.findByIdAndRemove(id)
     .then(deleted => {
       if (deleted === null) {
-        res.status(404).json({ error: 'Stylist not found' });
+        return res.status(404).json({ error: 'Stylist not found' });
       }
-      res.status(200).json({
+      return res.status(200).json({
         success: 'Deleted successfully'
       });
     })

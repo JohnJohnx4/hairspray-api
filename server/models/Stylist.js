@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const validate = require('mongoose-validator');
 var bcrypt = require('bcrypt');
+mongoose.set('useCreateIndex', true); // silence deprecation warning
 
 const Schema = mongoose.Schema;
 
@@ -22,6 +23,7 @@ const StylistSchema = Schema({
   },
   password: {
     type: String,
+    required: true,
     validate: [
       validate({
         validator: 'isLength',

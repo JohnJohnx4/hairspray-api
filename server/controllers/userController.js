@@ -2,6 +2,8 @@ const User = require('../models/User.js');
 const { userToken } = require('../config/auth');
 const bcrypt = require('bcrypt');
 const stripe = require('stripe')('sk_test_vY2PFCv47VGRTiS3Cb9c7uky');
+const mongoose = require('mongoose');
+mongoose.set('useFindAndModify', false);
 
 const createUser = (req, res) => {
   if (!req.body.user)
@@ -34,7 +36,6 @@ const userLogin = (req, res) => {
     }
     const userID = user._id;
     user.checkPassword(password, (nonMatch, hashMatch) => {
-      // This is an example of using our User.method from our model.
       if (nonMatch !== null) {
         res.status(422).json({ error: 'passwords dont match' });
         return;
@@ -88,6 +89,23 @@ const updateUser = (req, res) => {
   });
 };
 
+const deleteUser = (req, res) => {
+  const { id } = req.params;
+  User.findByIdAndRemove(id)
+    .then(deleted => {
+      if (deleted === null) {
+        res.status(404).json({ error: 'User not found' });
+      } else {
+        res.status(200).json({
+          success: 'Deleted successfully'
+        });
+      }
+    })
+    .catch(err => {
+      res.status(400).send({ error: err });
+    });
+};
+
 const fulfillRequest = res => (stripeErr, stripeRes) => {
   if (stripeErr) {
     res.status(500).send({ error: stripeErr });
@@ -105,6 +123,7 @@ module.exports = {
   getUser,
   getUsers,
   updateUser,
+  deleteUser,
   userLogin,
   createCharge
 };

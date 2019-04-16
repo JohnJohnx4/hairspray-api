@@ -18,63 +18,63 @@ const stylists = [
     phone: '1111111111',
     email: 'Albert@stylist.com',
     password: '123456',
-    image: 'http://localhost:5000/images/stylists/Albert.jpg'
+    avatar: 'http://localhost:5000/images/stylists/Albert.jpg'
   },
   {
     name: 'Alice',
     phone: '2222222222',
     email: 'Alice@stylist.com',
     password: '123456',
-    image: 'http://localhost:5000/images/stylists/Alice.jpg'
+    avatar: 'http://localhost:5000/images/stylists/Alice.jpg'
   },
   {
     name: 'Autumn',
     phone: '3333333333',
     email: 'Autumn@stylist.com',
     password: '123456',
-    image: 'http://localhost:5000/images/stylists/Autumn.jpg'
+    avatar: 'http://localhost:5000/images/stylists/Autumn.jpg'
   },
   {
     name: 'Betty',
     phone: '4444444444',
     email: 'Betty@stylist.com',
     password: '123456',
-    image: 'http://localhost:5000/images/stylists/Betty.jpg'
+    avatar: 'http://localhost:5000/images/stylists/Betty.jpg'
   },
   {
     name: 'James',
     phone: '5555555555',
     email: 'James@stylist.com',
     password: '123456',
-    image: 'http://localhost:5000/images/stylists/James.jpg'
+    avatar: 'http://localhost:5000/images/stylists/James.jpg'
   },
   {
     name: 'Jennifer',
     phone: 'stylist6666',
     email: 'Jennifer@user.com',
     password: '123456',
-    image: 'http://localhost:5000/images/stylists/Jennifer.jpg'
+    avatar: 'http://localhost:5000/images/stylists/Jennifer.jpg'
   },
   {
     name: 'Morgan',
     phone: '7777777777',
     email: 'Morgan@stylist.com',
     password: '123456',
-    image: 'http://localhost:5000/images/stylists/Morgan.jpg'
+    avatar: 'http://localhost:5000/images/stylists/Morgan.jpg'
   },
   {
     name: 'Topher',
     phone: '8888888888',
     email: 'Topher@stylist.com',
     password: '123456',
-    image: 'http://localhost:5000/images/stylists/Topher.jpg'
+    avatar: 'http://localhost:5000/images/stylists/Topher.jpg'
   },
   {
     name: 'Tara',
     phone: '99999999999',
     email: 'Tara@stylist.com',
     password: '123456',
-    image: 'http://localhost:5000/images/stylists/Tara.jpg'
+    avatar: 'http://localhost:5000/images/stylists/Tara.jpg'
   }
 ];
 const services = [
