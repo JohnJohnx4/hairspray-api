@@ -45,7 +45,7 @@ const userLogin = (req, res) => {
         const token = userToken({
           username: user.email
         });
-        res.json({ token, userID });
+        res.json({ token, user_id });
       }
     });
   });
