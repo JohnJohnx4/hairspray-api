@@ -7,8 +7,9 @@ chai.use(chaiHttp);
 chai.should();
 
 const { users, stylists, services } = require('./data');
-const User = require('../models/User.js');
-const Stylist = require('../models/Stylist.js');
+const User = require('../models/User');
+const Stylist = require('../models/Stylist');
+const Service = require('../models/Service');
 
 describe('Server', () => {
   before(done => {
@@ -27,8 +28,6 @@ describe('Server', () => {
 
   after(done => {
     mongoose.connection.dropDatabase(() => {
-      // User.collection.deleteMany();
-      // Stylist.collection.deleteMany();
       mongoose.connection.close(done);
     });
   });
@@ -330,8 +329,133 @@ describe('Server', () => {
     });
   });
 
-  describe('Services', () => {});
-  describe('Feedback', () => {});
-  describe('Appointments', () => {});
-  describe('Stripe', () => {});
+  describe('Services', () => {
+    let serviceToken = '';
+
+    Service.collection.insertMany(services, err => {
+      err ? console.log(err) : null;
+    });
+
+    describe('GET /', () => {
+      it('should get all Services', done => {
+        chai
+          .request(app)
+          .get('/api/services')
+          .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.be.a('array');
+            res.body[0].type.should.eql('Haircut');
+            res.body[0].price.should.eql('$20');
+            done();
+          });
+      });
+    });
+
+    describe('POST /', () => {
+      it('should add a new Service', done => {
+        const testPostService = { type: 'testPostService', price: '$100' };
+        chai
+          .request(app)
+          .post('/api/services')
+          .send({ service: testPostService })
+          .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.be.a('object');
+            res.body.should.have.all.keys('success');
+            done();
+          });
+      });
+    });
+
+    describe('/GET/:id', () => {
+      it('it should retrieve a service by id', done => {
+        const testGetService = new Service({
+          type: 'testGetService',
+          price: '$100'
+        });
+        testGetService.save((err, service) => {
+          chai
+            .request(app)
+            .get(`/api/services/${service._id}`)
+            .end((err, res) => {
+              res.should.have.status(200);
+              res.body.should.be.a('object');
+              res.body.should.have.property('type', 'testGetService');
+              res.body.should.have.property('price', '$100');
+              done();
+            });
+        });
+      });
+    });
+
+    describe('/PUT/:id', () => {
+      it('it updates a Service by id', done => {
+        const testPutService = new Service({
+          type: 'testPutService',
+          price: '$50'
+        });
+
+        testPutService.save((err, service) => {
+          if (err) {
+            console.log(err);
+            done();
+          }
+          chai
+            .request(app)
+            .put(`/api/services/${service._id}`)
+            // .set('Authorization', serviceToken)
+            .send({
+              type: 'UpdatedService',
+              price: '$500'
+            })
+            .end((err, res) => {
+              if (err) {
+                console.log('ERROR', err);
+                done();
+              }
+              res.body.success.should.have.property('type', 'UpdatedService');
+              res.body.success.should.have.property('price', '$500');
+              res.body.success.should.have.property(
+                '_id',
+                service._id.toString()
+              );
+              done();
+            });
+        });
+      });
+    });
+
+    describe('/DELETE/:id', () => {
+      it('it should remove a Service by id', done => {
+        let testDeleteService = new Service({
+          type: 'testDeleteService',
+          price: '$10000'
+        });
+        testDeleteService.save((err, service) => {
+          if (err) {
+            console.log(err);
+            done();
+          }
+          chai
+            .request(app)
+            .delete(`/api/services/${service._id}`)
+            .end((err, res) => {
+              if (err) {
+                console.log(err);
+                done();
+              }
+              res.should.have.status(200);
+              res.body.should.have.property('success');
+              res.body.should.be.a('object');
+              done();
+            });
+        });
+      });
+    });
+  });
+  
+  // TODO
+  // describe('Feedback', () => {});
+  // describe('Appointments', () => {});
+  // describe('Stripe', () => {});
 });

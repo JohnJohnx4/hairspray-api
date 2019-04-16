@@ -44,12 +44,11 @@ const getService = (req, res) => {
 const updateService = (req, res) => {
   const { id } = req.params;
   const { type, price } = req.body;
-  Service.findByIdAndUpdate(id, (type, price), { new: true })
+  Service.findByIdAndUpdate(id, { type, price }, { new: true })
     .then(service => {
       if (service === null) res.status(422).json({ error: `No service found` });
       res.status(200).json({
-        success: 'Service updated successfully',
-        update: service
+        success: service
       });
     })
     .catch(err => {
