@@ -7,6 +7,7 @@ router
   .post(feedback.POST);
 router
   .route('/:id')
+  .get(feedback.GET_ONE)
   .put(feedback.PUT)
   .delete(feedback.DELETE);
 router.route('/user/:id/').get(feedback.USER_GET);

@@ -2,15 +2,15 @@ const Feedback = require('../models/Feedback.js');
 
 const createFeedback = (req, res) => {
   if (!req.body.feedback)
-    return res.status(500).json({ error: 'No Feedback submitted' });  
+    return res.status(500).json({ error: 'No Feedback submitted' });
   const { feedback } = req.body;
 
   const newFeedback = new Feedback(feedback);
   newFeedback
     .save()
-    .then(() => {
+    .then(data => {
       res.status(200).json({
-        success: 'Feedback saved'
+        success: data._id
       });
     })
     .catch(err => {
@@ -26,10 +26,31 @@ const getAllFeedbacks = (req, res) => {
       populate: { path: 'user stylist' }
     })
     .then(feedback => {
-      res.send(feedback);
+      res.status(200).json({ success: feedback });
     })
     .catch(err => {
       res.status(400).send({ error: err });
+    });
+};
+
+const getFeedback = (req, res) => {
+  const feedback_id = req.params.id;
+  Feedback.findById(feedback_id)
+    .populate({ path: 'appointment', populate: { path: 'user stylist' } })
+    .populate({
+      path: 'appointment',
+      populate: {
+        path: 'service',
+        model: 'Service'
+      }
+    })
+    .then(appt => {
+      res.status(200).json({
+        success: appt
+      });
+    })
+    .catch(err => {
+      res.status(400).json({ error: err });
     });
 };
 
@@ -112,11 +133,6 @@ const updateFeedback = (req, res) => {
   const { id } = req.params;
   const {
     appointment,
-    consultationScore,
-    ontimeScore,
-    stylingScore,
-    customerserviceScore,
-    overallScore,
     consultation,
     ontime,
     styling,
@@ -126,11 +142,10 @@ const updateFeedback = (req, res) => {
   Feedback.findByIdAndUpdate(id, req.body, { new: true })
     .then(feedback => {
       if (feedback === null) {
-        res.json({ error: 'That Feedback does not exist' });
+        res.status(404).json({ error: 'That Feedback does not exist' });
       } else {
         res.status(200).json({
-          success: 'Feedback updated successfully',
-          feedback
+          success: feedback
         });
       }
     })
@@ -161,6 +176,7 @@ const deleteFeedback = (req, res) => {
 module.exports = {
   POST: createFeedback,
   GET: getAllFeedbacks,
+  GET_ONE: getFeedback,
   PUT: updateFeedback,
   DELETE: deleteFeedback,
   USER_GET: getUserFeedbacks,

@@ -14,7 +14,8 @@ const createStylist = (req, res) => {
         success: 'Stylist was saved',
         token: stylistToken({
           username: success.email
-        })
+        }),
+        _id: success._id
       });
     })
     .catch(err => res.status(500).send({ error: err.message }));

@@ -10,8 +10,8 @@ module.exports = app => {
   app.route('/getToken').get((req, res) => res.send(getToken())); // for testing
   app.use('/api/users', users);
   app.use('/api/stylists', stylists);
-  app.use('/api/appointments', appointments);
+  app.use('/api/appointment', appointments);
   app.use('/api/feedback', feedback);
-  app.use('/api/services', services);
+  app.use('/api/service', services);
   app.use('/api/stripe', stripe);
 };

@@ -15,7 +15,6 @@ const AppointmentSchema = Schema({
   session: {
     type: Date,
     required: true,
-    unique: true
   },
   service: [{ type: Schema.Types.ObjectId, ref: 'Service', required: true }],
   created: {

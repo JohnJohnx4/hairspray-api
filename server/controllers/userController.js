@@ -8,16 +8,17 @@ mongoose.set('useFindAndModify', false);
 const createUser = (req, res) => {
   if (!req.body.user)
     return res.status(500).json({ error: 'No User submitted' });
-  const newUser = req.body.user;
-  const user = new User(newUser);
+  const user = new User(req.body.user);
+  const token = userToken({
+    username: req.body.user.email
+  });
   user
     .save()
-    .then(success => {
+    .then(data => {
       res.status(200).json({
         success: 'User was saved',
-        token: userToken({
-          username: success.email
-        })
+        token,
+        _id: data._id
       });
     })
     .catch(err => res.status(500).send({ error: err.message }));

@@ -1,11 +1,11 @@
 const appointments = require('../controllers/appointmentController');
 const router = require('express').Router();
 
-router.route('/date').post(appointments.SEARCHBY_DATE);
 router
-  .route('/')
-  .post(appointments.POST)
-  .get(appointments.GET);
+.route('/')
+.get(appointments.GET)
+.post(appointments.POST);
+router.route('/date').post(appointments.SEARCHBY_DATE);
 router.route('/stylist/:id').get(appointments.STYLIST_GET);
 router.route('/date/stylist/:id').post(appointments.SEARCHBY_DATE_STYLIST);
 

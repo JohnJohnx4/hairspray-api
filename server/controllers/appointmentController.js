@@ -9,7 +9,7 @@ const createAppointment = (req, res) => {
   const newAppointment = new Appointment(appointment);
   newAppointment
     .save()
-    .then(() => {
+    .then(data => {
       // .then(appt => {
       // This trims the date and time to send to the user through text
       // let apptDay = session.slice(5, 7) + "/" + session.slice(8, 10);
@@ -34,7 +34,7 @@ const createAppointment = (req, res) => {
       // 	.then(message => console.log(message.sid))
       // 	.catch(err => console.log(err));
       res.status(200).json({
-        success: 'Appointment saved'
+        success: data._id
       });
     })
     .catch(err => {
@@ -106,8 +106,7 @@ const getAllAppointments = (req, res) => {
     .populate('service')
     .then(appt => {
       res.status(200).json({
-        success: 'Appointments found',
-        appt
+        success: appt
       });
     })
     .catch(err => {
@@ -123,8 +122,7 @@ const getAppointment = (req, res) => {
     .populate('service')
     .then(appt => {
       res.status(200).json({
-        success: 'Appointment found',
-        appt
+        success: appt
       });
     })
     .catch(err => {
@@ -211,11 +209,10 @@ const updateAppointment = (req, res) => {
   Appointment.findByIdAndUpdate(id, req.body, { new: true })
     .then(appt => {
       if (appt === null) {
-        res.json({ error: 'That Appointment does not exist' });
+        return res.status(404).json({ error: 'That Appointment does not exist' });
       } else {
         res.status(200).json({
-          success: 'Appointment updated successfully',
-          appt
+          success: appt
         });
       }
     })
