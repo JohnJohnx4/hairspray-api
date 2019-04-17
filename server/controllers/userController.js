@@ -32,10 +32,9 @@ const userLogin = (req, res) => {
       return;
     }
     if (user === null) {
-      res.status(422).json({ error: 'No user with that username in our DB' });
+      res.status(422).json({ error: 'No user with that username in DB' });
       return;
     }
-    const userID = user._id;
     user.checkPassword(password, (nonMatch, hashMatch) => {
       if (nonMatch !== null) {
         res.status(422).json({ error: 'passwords dont match' });
@@ -56,7 +55,7 @@ const getUser = (req, res) => {
   const { id } = req.params;
   User.findById(id).exec((err, user) => {
     if (err) {
-      res.status(422).json({ "That user doesn't exist": err });
+      res.status(422).json({ 'User not found': err });
       return;
     }
     res.json(user);
@@ -65,8 +64,6 @@ const getUser = (req, res) => {
 
 //  Useless route for now.
 const getUsers = (req, res) => {
-  // This controller will not work until a user has sent up a valid JWT
-  // check out what's going on in services/index.js in the `validate` token function
   User.find({}, (err, users) => {
     if (err) return res.send(err);
     res.status(200).send(users);
