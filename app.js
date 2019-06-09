@@ -4,8 +4,8 @@ const mongoose = require('mongoose');
 const path = require('path');
 const cors = require('cors');
 const helmet = require('helmet');
-const User = require('./models/User');
-const Stylist = require('./models/Stylist');
+// const User = require('./models/User');
+// const Stylist = require('./models/Stylist');
 
 const app = express();
 const port = process.env.PORT || 5000;
