@@ -8,9 +8,9 @@ const createService = (req, res) => {
   const newService = new Service(service);
   newService
     .save()
-    .then(() => {
+    .then(data => {
       res.status(200).json({
-        success: 'Service saved'
+        success: data._id
       });
     })
     .catch(err => {

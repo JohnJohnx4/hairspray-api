@@ -9,7 +9,7 @@ router
 router
   .route('/:id')
   .put(validateToken, users.updateUser)
-  .delete(validateToken, users.deleteUser)
+  .delete( users.deleteUser)
   .get(users.getUser);
 router.route('/login').post(users.userLogin);
 
