@@ -1,7 +1,6 @@
 const User = require('../models/User.js');
 const { userToken } = require('../config/auth');
 const bcrypt = require('bcrypt');
-const stripe = require('stripe')('sk_test_vY2PFCv47VGRTiS3Cb9c7uky');
 const mongoose = require('mongoose');
 mongoose.set('useFindAndModify', false);
 
@@ -106,17 +105,7 @@ const deleteUser = (req, res) => {
     });
 };
 
-const fulfillRequest = res => (stripeErr, stripeRes) => {
-  if (stripeErr) {
-    res.status(500).send({ error: stripeErr });
-  } else {
-    res.status(200).send({ success: stripeRes });
-  }
-};
 
-const createCharge = (req, res) => {
-  stripe.charges.create(req.body, fulfillRequest(res));
-};
 
 module.exports = {
   createUser,
@@ -124,6 +113,5 @@ module.exports = {
   getUsers,
   updateUser,
   deleteUser,
-  userLogin,
-  createCharge
+  userLogin
 };

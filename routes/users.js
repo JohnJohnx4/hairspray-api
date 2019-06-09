@@ -2,12 +2,10 @@ const users = require('../controllers/userController');
 const router = require('express').Router();
 const { validateToken } = require('../config/auth');
 
-// router.route('/').get(validateToken, users.getUsers);
-
 router
   .route('/')
   .post(users.createUser)
-  .get(users.getUsers);
+  .get(validateToken, users.getUsers);
 router
   .route('/:id')
   .put(validateToken, users.updateUser)

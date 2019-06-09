@@ -7,8 +7,9 @@
 		"test": "test"
 	},
 	"scripts": {
-		"start": "nodemon ./server/app.js",
-		"test": "mocha ./server/test"
+		"start": "node ./app.js",
+		"dev": "nodemon ./app.js",
+		"test": "mocha ./test"
 	},
 	"repository": {
 		"type": "git",
@@ -20,18 +21,8 @@
 		"url": "https://github.com/Lambda-School-Labs/hairspray/issues"
 	},
 	"homepage": "https://github.com/Lambda-School-Labs/hairspray#readme",
-	"devDependencies": {
-		"eslint": "^5.16.0",
-		"eslint-config-airbnb": "^16.1.0",
-		"eslint-config-prettier": "^2.9.0",
-		"eslint-plugin-import": "^2.7.0",
-		"eslint-plugin-jsx-a11y": "^6.0.2",
-		"eslint-plugin-react": "^7.4.0",
-		"mockgoose": "^8.0.1"
-	},
 	"dependencies": {
 		"bcrypt": "^3.0.5",
-		"bcrypt-nodejs": "0.0.3",
 		"chai": "^4.2.0",
 		"chai-http": "^4.2.1",
 		"cors": "^2.8.4",
