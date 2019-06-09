@@ -4,7 +4,7 @@ const stylists = require('./stylists');
 const appointments = require('./appointments');
 const feedback = require('./feedback');
 const services = require('./services');
-const stripe = require('./stripe');
+// const stripe = require('./stripe');
 
 module.exports = app => {
   // app.route('/getToken').get((req, res) => res.send(getToken())); // for testing
